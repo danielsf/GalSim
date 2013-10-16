@@ -1,3 +1,10 @@
+"""
+@file reconvolution_validation.py
+Calculate the accuracy of the reconvolution engine
+by comparing the shapes of reconvolved images of elliptical galaxies with
+those created directly.
+"""
+
 import os
 import pdb
 import pyfits
@@ -19,6 +26,8 @@ NO_PSF_VALUE    = -98
 def _ErrorResults(ERROR_VALUE,ident):
     """
     @brief Return a results structure with all fields set to ERROR_VALUE, and with id ident
+    @param ERROR_VALUE value to fill in result dict fields
+    @param ident id of the galaxy
     """
 
     result = {  'moments_g1' : ERROR_VALUE,
@@ -396,7 +405,7 @@ def RunComparisonForVariedParams(config):
     """
     @brief Runs the comparison of direct and reconv convolution methods, producing results file for each of the 
     varied parameters in the config file, under key 'vary_params'.
-    Produces a results file for each parameter and it's distinct value.
+    Produces a results file for each parameter and its distinct value.
     The filename of the results file is: 'results.yaml_filename.param_name.param_value_index.cat'
     @param config              the config object, as read by yaml
     """

@@ -1,4 +1,12 @@
-# if you want, use less galaxies
+# .debug. file - is a shorter version of the regular config files (space, ground), 
+# that I used to check if the code works. It may be handy for anyone who wants to repeat the 
+# tests later.
+
+# photon_vs_fft.debug.yaml is a configuration script for use with photon_vs_fft.py.
+# It is not a standard galsim.config script, although the main driver uses parts of it as such.
+# See README.md, photon_vs_fft.py and comments in this file for usage details.
+
+# if you want, use fewer galaxies
 n_gals: &n_gals 3
 
 # settings for the photon_vs_fft
@@ -11,15 +19,13 @@ photon_vs_fft_settings :
     abs_tol_ellip : 1e-3
     # will repeat noise realisations until this accuracy on size is reached
     abs_tol_size :  1e-3
-    # number of noise realisations per iteration
-    n_trials_per_iter : 32 
     # number of photons to shoot per iteration
     n_photons_per_trial : 1e6
 
 # added for the purpose of the photon_vs_fft
 # photon_vs_fft will run once for each value of each listed parameter
 # the results for the input galaxies will be saved to a file with a name
-# 'results.yaml_filename.param_name.param_index.cat'
+# 'results.yaml_filename.param_name.param_index.fft.cat' (or pht for photon)
 # later other scripts can be used to produce plots
 vary_params:
     alias_threshold : 
@@ -74,7 +80,7 @@ image :
     noise :
         type : Gaussian
         sigma : 0.         
-    # at this point specify the defaults, but if has to be specified here if will be changed later
+    # at this point specify the defaults, but it has to be specified here if will be changed later
     # using vary_params
     gsparams :
          minimum_fft_size : 128      

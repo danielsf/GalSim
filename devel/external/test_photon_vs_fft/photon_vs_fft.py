@@ -20,6 +20,11 @@ HSM_ERROR_VALUE = -99
 NO_PSF_VALUE    = -98
 
 def _ErrorResults(ERROR_VALUE,ident):
+    """
+    @brief get empty results
+    @param ERROR_VALUE value to fill in to the result
+    @param ident identifier of the galaxy
+    """
 
     result = {  'moments_g1' : ERROR_VALUE,
                         'moments_g2' : ERROR_VALUE,
@@ -51,7 +56,7 @@ def WriteResultsHeader(file_output):
 
 def WriteResults(file_output,results):
     """
-    #brief Save results to file.
+    @brief Save results to file.
     
     @file_output            file pointer to which results will be written
     @results                dict - result of GetResultsPhoton or GetResultsFFT
@@ -130,7 +135,6 @@ def RunMeasurementsFFT(config,filename_results):
     Arguments
     ---------
     @param config              the yaml config used to create images
-
     @param filename_results    file to which the results will be written
     """
 
@@ -201,9 +205,7 @@ def RunMeasurementsPhotAndFFT(config,filename_results_pht,filename_results_fft):
     Arguments
     ---------
     @param   config                   the yaml config used to create images
-
     @param   filename_results_pht     file to save the photon results
-
     @param   filename_results_fft     file to save the FFT results
     """
 
@@ -226,7 +228,7 @@ def RunMeasurementsPhotAndFFT(config,filename_results_pht,filename_results_fft):
         nobjects = 1
         objects_ids = [config['ident']]
 
-    #Measure the photon and FFT images
+    # Measure the photon and FFT images
     for i in objects_ids:
        
         try:
@@ -351,7 +353,7 @@ def RunComparisonForVariedParams(config):
     """
     Runs the comparison of photon and fft drawing methods, producing results file for each of the 
     varied parameters in the config file, under key 'vary_params'.
-    Produces a results file for each parameter and it's distinct value.
+    Produces a results file for each parameter and its distinct value.
     The filename of the results file is: 'results.yaml_filename.param_name.param_value_index.cat'
     Arguments
     ---------
@@ -413,7 +415,14 @@ if __name__ == "__main__":
     description = \
     'Compare FFT vs Photon shooting. \
     Use the galaxies specified in the corresponding yaml file \
-    (see photon_vs_fft.yaml for an example)' 
+    (see photon_vs_fft.yaml for an example) \
+    Example outputs file: \
+    results.yaml_filename.param_name.param_index.cat \
+    where param_name is the name of the varied parameter \
+    (if default set is ran, then will contain word "default" ) \
+    param_index - the index of a parameter in the list in the config file.\
+    Each row corresponds to a galaxy shape measurement. \
+    ' 
 
     # parse arguments
     parser = argparse.ArgumentParser(description=description, add_help=True)
@@ -434,7 +443,7 @@ if __name__ == "__main__":
     parser.add_argument(
             '-i', '--ident', type=int, action='store', default=-1, 
             help='id of the galaxy in the catalog to process. If this option is supplied, then \
-            only one galaxy will be processed, otherwise all it the config file')
+            only one galaxy will be processed, otherwise all in the config file')
     args = parser.parse_args()
 
     # set up logger
@@ -467,7 +476,7 @@ if __name__ == "__main__":
         config['run_default'] = True
         config['run_vary_params'] = True
 
-    # decide if run all galaxy or just one specified by command line
+    # decide if run all galaxies or just one specified by command line
     if config['ident'] < 0:
         logger.info('running for all galaxies in the config file')
     else:

@@ -50,6 +50,16 @@ default_params = galsim.GSParams(
         integration_relerr = 1.e-5,
         integration_abserr = 1.e-7)
 
+# Some parameters used in the two unit tests test_integer_shift_fft and test_integer_shift_photon:
+test_sigma = 1.8
+test_hlr = 1.8
+int_shift_x = 7
+int_shift_y = 3
+n_pix_x = 50
+n_pix_y = 60
+delta_sub = 30
+image_decimal_precise = 15
+
 
 def test_smallshear():
     """Test the application of a small shear to a Gaussian SBProfile against a known result.
@@ -235,7 +245,7 @@ def test_mag():
     re = 1.0
     r0 = re/1.67839
     mySBP = galsim.SBExponential(flux=1, scale_radius=r0)
-    mySBP.applyScale(1.5)
+    mySBP.applyExpansion(1.5)
     savedImg = galsim.fits.read(os.path.join(imgdir, "exp_mag.fits"))
     myImg = galsim.ImageF(savedImg.bounds, scale=0.2)
     mySBP.draw(myImg.view())
@@ -557,16 +567,6 @@ def test_rescale():
 
     t2 = time.time()
     print 'time for %s = %.2f'%(funcname(),t2-t1)
-
-# Some parameters used in both of the next two unit tests:
-test_sigma = 1.8
-test_hlr = 1.8
-int_shift_x = 7
-int_shift_y = 3
-n_pix_x = 50
-n_pix_y = 60
-delta_sub = 30
-image_decimal_precise = 15
 
 def test_integer_shift_fft():
     """Test if applyShift works correctly for integer shifts using draw method.
